@@ -1,0 +1,22 @@
+PODS:
+  - GreedPhotoBrowser (0.0.1):
+    - Masonry
+    - SDWebImage
+  - Masonry (0.6.4)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+
+DEPENDENCIES:
+  - GreedPhotoBrowser (from `./`)
+
+EXTERNAL SOURCES:
+  GreedPhotoBrowser:
+    :path: ./
+
+SPEC CHECKSUMS:
+  GreedPhotoBrowser: 09dac737063998388978fb157ed666a333d2c58d
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+
+COCOAPODS: 0.39.0

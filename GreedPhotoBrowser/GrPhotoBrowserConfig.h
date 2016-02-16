@@ -19,30 +19,38 @@ typedef enum {
 #endif
 
 // 图片保存成功提示文字
+#ifndef GRPhotoBrowserSaveImageSuccessText
 #define GRPhotoBrowserSaveImageSuccessText @" ^_^ 保存成功 "
+#endif
 
 // 图片保存失败提示文字
+#ifndef GRPhotoBrowserSaveImageFailText
 #define GRPhotoBrowserSaveImageFailText @" >_< 保存失败 "
+#endif
 
 // browser背景颜色
+#ifndef GRPhotoBrowserBackgrounColor
 #define GRPhotoBrowserBackgrounColor [UIColor colorWithRed:0 green:0 blue:0 alpha:0.95]
+#endif
 
 // browser中图片间的margin
+#ifndef GRPhotoBrowserSingleViewMargin
 #define GRPhotoBrowserSingleViewMargin 10
-
-// browser中显示图片动画时长
-#define GRPhotoBrowserShowImageAnimationDuration 0.3
-
-// browser中显示图片动画时长
-#define GRPhotoBrowserHideImageAnimationDuration 0.3
+#endif
 
 // 图片下载进度指示进度显示样式（GRPhotoBrowserWaitingViewModeLoopDiagram 环形，GRPhotoBrowserWaitingViewModePieDiagram 饼型）
+#ifndef GRPhotoBrowserWaitingViewProgressMode
 #define GRPhotoBrowserWaitingViewProgressMode GRPhotoBrowserWaitingViewModeLoopDiagram
+#endif
 
 // 图片下载进度指示器背景色
+#ifndef GRPhotoBrowserWaitingViewBackgroundColor
 #define GRPhotoBrowserWaitingViewBackgroundColor [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7]
+#endif
 
 // 图片下载进度指示器内部控件间的间距
+#ifndef GRPhotoBrowserWaitingViewItemMargin
 #define GRPhotoBrowserWaitingViewItemMargin 10
+#endif
 
 #endif /* GrPhotoBrowserConfig_h */

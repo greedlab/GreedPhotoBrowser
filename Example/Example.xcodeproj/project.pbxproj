@@ -17,6 +17,10 @@
 		281CEFDB1C71C0FB003E799D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 281CEFD91C71C0FB003E799D /* LaunchScreen.storyboard */; };
 		281CEFE61C71C0FB003E799D /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 281CEFE51C71C0FB003E799D /* ExampleTests.m */; };
 		281CEFF11C71C0FC003E799D /* ExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 281CEFF01C71C0FC003E799D /* ExampleUITests.m */; };
+		281CF01A1C72C25C003E799D /* pengyouquan.png in Resources */ = {isa = PBXBuildFile; fileRef = 281CF0161C72C25C003E799D /* pengyouquan.png */; };
+		281CF01B1C72C25C003E799D /* pengyouquan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281CF0171C72C25C003E799D /* pengyouquan@2x.png */; };
+		281CF01C1C72C25C003E799D /* qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 281CF0181C72C25C003E799D /* qq.png */; };
+		281CF01D1C72C25C003E799D /* qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281CF0191C72C25C003E799D /* qq@2x.png */; };
 		49FC57ED911AAE4F7AE315BE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C6901D3C8F21802F0EBC83 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +58,10 @@
 		281CEFEC1C71C0FB003E799D /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		281CEFF01C71C0FC003E799D /* ExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleUITests.m; sourceTree = "<group>"; };
 		281CEFF21C71C0FC003E799D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		281CF0161C72C25C003E799D /* pengyouquan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pengyouquan.png; sourceTree = "<group>"; };
+		281CF0171C72C25C003E799D /* pengyouquan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pengyouquan@2x.png"; sourceTree = "<group>"; };
+		281CF0181C72C25C003E799D /* qq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qq.png; sourceTree = "<group>"; };
+		281CF0191C72C25C003E799D /* qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@2x.png"; sourceTree = "<group>"; };
 		32C6901D3C8F21802F0EBC83 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		429BEF10CB26A3E76CED2524 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E30A2E5669451ADA3A51AB86 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +128,7 @@
 		281CEFCA1C71C0FB003E799D /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				281CF0151C72C25C003E799D /* Resource */,
 				281CEFCE1C71C0FB003E799D /* AppDelegate.h */,
 				281CEFCF1C71C0FB003E799D /* AppDelegate.m */,
 				281CEFD11C71C0FB003E799D /* ViewController.h */,
@@ -157,6 +166,17 @@
 				281CEFF21C71C0FC003E799D /* Info.plist */,
 			);
 			path = ExampleUITests;
+			sourceTree = "<group>";
+		};
+		281CF0151C72C25C003E799D /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				281CF0161C72C25C003E799D /* pengyouquan.png */,
+				281CF0171C72C25C003E799D /* pengyouquan@2x.png */,
+				281CF0181C72C25C003E799D /* qq.png */,
+				281CF0191C72C25C003E799D /* qq@2x.png */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		F0C4FF5F58FBBE22EFD38575 /* Pods */ = {
@@ -280,7 +300,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				281CF01D1C72C25C003E799D /* qq@2x.png in Resources */,
 				281CEFDB1C71C0FB003E799D /* LaunchScreen.storyboard in Resources */,
+				281CF01B1C72C25C003E799D /* pengyouquan@2x.png in Resources */,
+				281CF01C1C72C25C003E799D /* qq.png in Resources */,
+				281CF01A1C72C25C003E799D /* pengyouquan.png in Resources */,
 				281CEFD81C71C0FB003E799D /* Assets.xcassets in Resources */,
 				281CEFD61C71C0FB003E799D /* Main.storyboard in Resources */,
 			);
@@ -523,7 +547,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -561,7 +585,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

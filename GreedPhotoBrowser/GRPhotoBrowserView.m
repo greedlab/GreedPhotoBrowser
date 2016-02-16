@@ -18,10 +18,33 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _showed = NO;
+        _viewHeight = 0.f;
+        _viewWidth = 0.f;
         [self initView];
         [self setConstraint];
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    BOOL viewWidthOrHeightUpdated = NO;
+    CGFloat newWidth = CGRectGetWidth(self.frame);
+    if (_viewWidth != newWidth) {
+        _viewWidth = newWidth;
+        viewWidthOrHeightUpdated = YES;
+    }
+    CGFloat newHeight = CGRectGetHeight(self.frame);
+    if (_viewHeight != newHeight) {
+        _viewHeight = newHeight;
+        viewWidthOrHeightUpdated = YES;
+    }
+    
+    if (viewWidthOrHeightUpdated) {
+        [self viewWidthOrHeightUpdated];
+    }
 }
 
 #pragma mark - public
@@ -29,12 +52,11 @@
 - (void)show
 {
     self.imageCount = [self.dataSource numberOfPhotosInPhotoBrowser:self];
+    [self updateIndexLabel];
     [self updateScrollView];
-}
-
-- (void)reload
-{
-    [self show];
+    [self updateScrollViewContentOffsetWithAnimated:NO];
+    [self setupImageOfImageViewForIndex:_currentIndex];
+    _showed = YES;
 }
 
 #pragma mark - getter
@@ -62,7 +84,6 @@
         label.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         label.layer.cornerRadius = 15;
         label.layer.masksToBounds = YES;
-        label.hidden = YES;
         _indexLabel = label;
     }
     return _indexLabel;
@@ -122,23 +143,20 @@
 
 #pragma mark - setter
 
-- (void)setCurrentImageIndex:(NSInteger)currentImageIndex
+- (void)setCurrentIndex:(NSInteger)currentIndex
 {
-    if (_currentImageIndex == currentImageIndex) {
+    if (_currentIndex == currentIndex) {
         return;
     }
-    _currentImageIndex = currentImageIndex;
-    [self updateIndexLabel];
-    [self setupImageOfImageViewForIndex:_currentImageIndex];
-}
-
-- (void)setImageCount:(NSInteger)imageCount
-{
-    if (_imageCount == imageCount) {
+    if (currentIndex >= [self.dataSource numberOfPhotosInPhotoBrowser:self]) {
         return;
     }
-    _imageCount = imageCount;
-    [self updateIndexLabel];
+    _currentIndex = currentIndex;
+    if (_showed) {
+        [self updateIndexLabel];
+        [self setupImageOfImageViewForIndex:_currentIndex];
+        [self updateScrollViewContentOffsetWithAnimated:YES];
+    }
 }
 
 #pragma mark - action
@@ -177,24 +195,24 @@
     if (index >= array.count) {
         return;
     }
-    GRPhotoBrowserSingleView *imageView = array[index];
-    if (imageView.hasLoadedImage) {
+    GRPhotoBrowserSingleView *singleView = array[index];
+    if (singleView.hasLoadedImage) {
         [_saveButton setHidden:NO];
         return;
     }
     if([self highQualityImageForIndex:index]){
-        [imageView setImage:[self highQualityImageForIndex:index]];
+        [singleView.imageView setImage:[self highQualityImageForIndex:index]];
         [_saveButton setHidden:NO];
     } else if ([self highQualityImageURLForIndex:index]) {
         [_saveButton setHidden:YES];
-        [imageView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index] completed:^(BOOL success) {
+        [singleView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index] completed:^(BOOL success) {
             [_saveButton setHidden:!success];
         }];
     } else {
-        imageView.image = [self placeholderImageForIndex:index];
+        singleView.imageView.image = [self placeholderImageForIndex:index];
         [_saveButton setHidden:NO];
     }
-    imageView.hasLoadedImage = YES;
+    singleView.hasLoadedImage = YES;
 }
 
 /**
@@ -217,32 +235,26 @@
     } else {
         scale = 1.5;
     }
-    
-    [imageView doubleTapToZommWithScale:scale];
-    
-    if (scale == 1) {
-        [imageView clear];
-    }
+    [imageView setScale:scale animate:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (scrollView != _scrollView) {
+        return;
+    }
     int index = (scrollView.contentOffset.x + _scrollView.bounds.size.width * 0.5) / _scrollView.bounds.size.width;
     CGFloat margin = 150;
     CGFloat x = scrollView.contentOffset.x;
     if ((x - index * self.bounds.size.width) > margin || (x - index * self.bounds.size.width) < - margin) {
-        GRPhotoBrowserSingleView *imageView = _scrollView.subviews[index];
-        if (imageView.isScaled) {
-            [UIView animateWithDuration:0.5 animations:^{
-                imageView.transform = CGAffineTransformIdentity;
-            } completion:^(BOOL finished) {
-                [imageView cancelScale];
-            }];
+        GRPhotoBrowserSingleView *singleView = _scrollView.subviews[index];
+        if (singleView.isScaled) {
+            [singleView setScale:1.0 animate:YES];
         }
     }
-    self.currentImageIndex = index;
+    self.currentIndex = index;
 }
 
 #pragma mark - private
@@ -291,7 +303,7 @@
 
 - (void)updateIndexLabel
 {
-    _indexLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long)_currentImageIndex + 1, (long)_imageCount];
+    _indexLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long)_currentIndex + 1, (long)_imageCount];
 }
 
 -(void)updateScrollView
@@ -340,10 +352,6 @@
             }];
         }
     }];
-    CGPoint offset = _scrollView.contentOffset;
-    offset.x = _currentImageIndex * _scrollView.frame.size.width;
-    _scrollView.contentOffset = offset;
-    [self setupImageOfImageViewForIndex:_currentImageIndex];
 }
 
 - (UIImage *)placeholderImageForIndex:(NSInteger)index
@@ -362,6 +370,25 @@
 {
     GRPhotoBrowserItem *photo = [self.dataSource photoBrowser:self photoAtIndex:index];
     return photo.url;
+}
+
+- (void)viewWidthOrHeightUpdated {
+    {
+        [self updateScrollViewContentOffsetWithAnimated:YES];
+    }
+    {
+        GRPhotoBrowserSingleView *singleView = [_scrollView subviews][_currentIndex];
+        [singleView updateForScale:singleView.scale animate:YES];
+    }
+}
+
+- (void)updateScrollViewContentOffsetWithAnimated:(BOOL)animated {
+    CGPoint offset = _scrollView.contentOffset;
+    CGFloat newX = _currentIndex * _scrollView.frame.size.width;
+    if (newX != offset.x) {
+        offset.x = newX;
+        [_scrollView setContentOffset:offset animated:animated];
+    }
 }
 
 @end

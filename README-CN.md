@@ -1,19 +1,23 @@
 # GreedPhotoBrowser
 
-a photo browser for iOS
+iOS图片浏览器
 
-## [中文README](README-CN.md)
-
-## Installation
+## 安装
 
 ```
 pod 'GreedPhotoBrowser'
 ```
 
-## Usage
+## 使用说明
 
+```objc
+     GRPhotoBrowserViewController *viewController = [[GRPhotoBrowserViewController alloc] init];
+    viewController.photoItemsArray = _photoItemArray;
+    viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:viewController animated:YES completion:nil];
+```
 
-## Change Log
+## 更新记录
 
 [CHANGELOG](CHANGELOG.md)
 

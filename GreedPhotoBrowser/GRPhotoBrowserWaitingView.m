@@ -17,7 +17,7 @@
         self.backgroundColor = GRPhotoBrowserWaitingViewBackgroundColor;
         self.layer.cornerRadius = 5;
         self.clipsToBounds = YES;
-        self.mode = GRPhotoBrowserWaitingViewModeLoopDiagram;
+        self.mode = GRPhotoBrowserWaitingViewProgressMode;
     }
     return self;
 }

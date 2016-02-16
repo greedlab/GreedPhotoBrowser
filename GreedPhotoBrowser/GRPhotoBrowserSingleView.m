@@ -9,7 +9,6 @@
 #import "GRPhotoBrowserSingleView.h"
 #import "UIImageView+WebCache.h"
 #import "GRPhotoBrowserConfig.h"
-#import "Masonry.h"
 
 @implementation GRPhotoBrowserSingleView
 
@@ -17,42 +16,23 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.userInteractionEnabled = YES;
-        self.contentMode = UIViewContentModeScaleAspectFit;
-        _totalScale = 1.0;
-        
-        // 捏合手势缩放图片
-        UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomImage:)];
-        pinch.delegate = self;
-        [self addGestureRecognizer:pinch];
+        _scale = 1.0;
+        [self initView];
+        [self setConstraints];
     }
     return self;
 }
 
 #pragma mark - public
 
-- (BOOL)isScaled
-{
-    return  1.0 != _totalScale;
-}
-
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(void (^)(BOOL success))completed
 {
-    GRPhotoBrowserWaitingView *waiting = [[GRPhotoBrowserWaitingView alloc] init];
-    waiting.mode = GRPhotoBrowserWaitingViewProgressMode;
-    _waitingView = waiting;
-    [self addSubview:waiting];
-    
+    [_waitingView setHidden:NO];
     WeakSelf(weakSelf);
-    [waiting mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(weakSelf);
-        make.height.width.equalTo(@100);
-    }];
-    
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    [_imageView sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         weakSelf.progress = (CGFloat)receivedSize / expectedSize;
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [weakSelf removeWaitingView];
+        [_waitingView setHidden:YES];
         if (error) {
             [_failLabel setHidden:NO];
             
@@ -63,8 +43,7 @@
                 completed(NO);
             }
         } else {
-            _scrollImageView.image = image;
-            [_scrollImageView setNeedsDisplay];
+            _imageView.image = image;
             if (completed) {
                 completed(YES);
             }
@@ -77,12 +56,91 @@
     [self setImageWithURL:url placeholderImage:placeholder completed:nil];
 }
 
+- (void)updateForScale:(CGFloat)scale animate:(BOOL)animate
+{
+    [_imageViewHeightConstraint setOffset:((scale - 1) * _scrollView.frame.size.height)];
+    [_imageViewWidthConstraint setOffset:((scale - 1) * _scrollView.frame.size.width)];
+    
+    if (animate) {
+        [UIView animateWithDuration:0.3 animations:^{
+            [_scrollView layoutIfNeeded];
+            [_scrollView setContentOffset:CGPointMake((_scrollView.contentSize.width - _scrollView.frame.size.width) / 2.0, (_scrollView.contentSize.height - _scrollView.frame.size.height ) / 2.0)];
+        }];
+    } else {
+        [_scrollView layoutIfNeeded];
+        [_scrollView setContentOffset:CGPointMake((_scrollView.contentSize.width - _scrollView.frame.size.width) / 2.0, (_scrollView.contentSize.height - _scrollView.frame.size.height ) / 2.0)];
+    }
+}
+
 #pragma mark - getter
 
-- (UILabel *)failLabel {
-    if (_failLabel) {
+- (BOOL)isScaled
+{
+    return  1.0 != _scale;
+}
+
+#pragma mark - setter
+
+- (void)setProgress:(CGFloat)progress
+{
+    if (_progress == progress) {
+        return;
+    }
+    _progress = progress;
+    _waitingView.progress = progress;
+}
+
+- (void)setScale:(CGFloat)scale
+{
+    [self setScale:scale animate:NO];
+}
+
+- (void)setScale:(CGFloat)scale animate:(BOOL)animate
+{
+    if (scale < 0.5 || scale > 2.0 || scale == _scale) {
+        return;
+    }
+    _scale = scale;
+    [self updateForScale:scale animate:animate];
+}
+
+#pragma mark - action
+
+- (void)zoomImage:(UIPinchGestureRecognizer *)recognizer
+{
+    CGFloat scale = recognizer.scale;
+    CGFloat temp = _scale + (scale - 1);
+    [self setScale:temp];
+    recognizer.scale = 1.0;
+}
+
+#pragma mark - private
+
+- (void)initView {
+    {
+        UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:self.bounds];
+        scroolView.backgroundColor = GRPhotoBrowserBackgrounColor;
+        scroolView.showsHorizontalScrollIndicator = NO;
+        scroolView.showsVerticalScrollIndicator = NO;
+        [self addSubview:scroolView];
+        _scrollView = scroolView;
+    }
+    {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [_scrollView addSubview:imageView];
+        _imageView = imageView;
+    }
+    {
+        
+        GRPhotoBrowserWaitingView *waitingView = [[GRPhotoBrowserWaitingView alloc] init];
+        waitingView.mode = GRPhotoBrowserWaitingViewProgressMode;
+        waitingView.hidden = YES;
+        [self addSubview:waitingView];
+        _waitingView = waitingView;
+    }
+    {
         UILabel *label = [[UILabel alloc] init];
-        label.bounds = CGRectMake(0, 0, 160, 30);
         label.text = @"图片加载失败";
         label.font = [UIFont systemFontOfSize:16];
         label.textColor = [UIColor whiteColor];
@@ -90,123 +148,35 @@
         label.layer.cornerRadius = 5;
         label.layer.masksToBounds = YES;
         label.textAlignment = NSTextAlignmentCenter;
+        label.hidden = YES;
+        [self addSubview:label];
         _failLabel = label;
     }
-    return _failLabel;
-}
-
-#pragma mark - setter
-
-- (void)setProgress:(CGFloat)progress
-{
-    _progress = progress;
-    _waitingView.progress = progress;
-}
-
-#pragma mark - action
-
-- (void)zoomImage:(UIPinchGestureRecognizer *)recognizer
-{
-    [self prepareForImageViewScaling];
-    CGFloat scale = recognizer.scale;
-    CGFloat temp = _totalScale + (scale - 1);
-    [self setTotalScale:temp];
-    recognizer.scale = 1.0;
-}
-
-- (void)setTotalScale:(CGFloat)totalScale
-{
-    if ((_totalScale < 0.5 && totalScale < _totalScale) || (_totalScale > 2.0 && totalScale > _totalScale)) return; // 最大缩放 2倍,最小0.5倍
-    [self zoomWithScale:totalScale];
-}
-
-- (void)zoomWithScale:(CGFloat)scale
-{
-    _totalScale = scale;
-    
-    _zoomingImageView.transform = CGAffineTransformMakeScale(scale, scale);
-    
-    if (scale > 1) {
-        CGFloat contentW = _zoomingImageView.frame.size.width;
-        CGFloat contentH = MAX(_zoomingImageView.frame.size.height, self.frame.size.height);
-        
-        _zoomingImageView.center = CGPointMake(contentW * 0.5, contentH * 0.5);
-        _zoomingScroolView.contentSize = CGSizeMake(contentW, contentH);
-        
-        CGPoint offset = _zoomingScroolView.contentOffset;
-        offset.x = (contentW - _zoomingScroolView.frame.size.width) * 0.5;
-        _zoomingScroolView.contentOffset = offset;
-    } else {
-        _zoomingScroolView.contentSize = _zoomingScroolView.frame.size;
-        _zoomingScroolView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        _zoomingImageView.center = _zoomingScroolView.center;
-    }
-}
-
-- (void)doubleTapToZommWithScale:(CGFloat)scale
-{
-    [self prepareForImageViewScaling];
-    [UIView animateWithDuration:0.3 animations:^{
-        [self zoomWithScale:scale];
-    }];
-}
-
-- (void)prepareForImageViewScaling
-{
-    if (!_zoomingScroolView) {
-        _zoomingScroolView = [[UIScrollView alloc] initWithFrame:self.bounds];
-        _zoomingScroolView.backgroundColor = GRPhotoBrowserBackgrounColor;
-        _zoomingScroolView.contentSize = self.bounds.size;
-        UIImageView *zoomingImageView = [[UIImageView alloc] initWithImage:self.image];
-        CGSize imageSize = zoomingImageView.image.size;
-        CGFloat imageVieH = self.bounds.size.height;
-        if (imageSize.width > 0) {
-            imageVieH = self.bounds.size.width * (imageSize.height / imageSize.width);
-        }
-        zoomingImageView.bounds = CGRectMake(0, 0, self.bounds.size.width, imageVieH);
-        zoomingImageView.center = _zoomingScroolView.center;
-        zoomingImageView.contentMode = UIViewContentModeScaleAspectFit;
-        _zoomingImageView = zoomingImageView;
-        
-        [_zoomingScroolView addSubview:zoomingImageView];
-        [self addSubview:_zoomingScroolView];
-    }
-}
-
-- (void)scaleImage:(CGFloat)scale
-{
-    [self prepareForImageViewScaling];
-    [self setTotalScale:scale];
-}
-
-// 清除缩放
-- (void)cancelScale
-{
-    [self clear];
-    _totalScale = 1.0;
-}
-
-- (void)clear
-{
-    [_zoomingScroolView removeFromSuperview];
-    _zoomingScroolView = nil;
-    [_zoomingImageView removeFromSuperview];
-    _zoomingImageView = nil;
-}
-
-- (void)removeWaitingView
-{
-    [_waitingView removeFromSuperview];
-}
-
-#pragma mark - private
-
-- (void)initView {
-    
+    // 捏合手势缩放图片
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomImage:)];
+    pinch.delegate = self;
+    [self addGestureRecognizer:pinch];
 }
 
 - (void)setConstraints {
-    
+    WeakSelf(weakSelf);
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(weakSelf);
+    }];
+    [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(_scrollView);
+        _imageViewHeightConstraint = make.height.equalTo(_scrollView);
+        _imageViewWidthConstraint = make.width.equalTo(_scrollView);
+    }];
+    [_waitingView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(weakSelf);
+        make.height.width.equalTo(@100);
+    }];
+    [_failLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(weakSelf);
+        make.height.equalTo(@30);
+        make.width.equalTo(@160);
+    }];
 }
 
 @end

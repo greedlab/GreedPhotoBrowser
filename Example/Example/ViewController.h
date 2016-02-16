@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GRPhotoBrowser.h"
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, strong) NSArray *srcStringArray;
+@property (nonatomic, strong) NSMutableArray *photoItemArray;
 
 @end
-

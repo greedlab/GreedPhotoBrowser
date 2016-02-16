@@ -26,7 +26,9 @@
 
 @interface GRPhotoBrowserView : UIView<UIScrollViewDelegate>
 {
-    BOOL _hasShowedFistView;
+    BOOL _showed;
+    CGFloat _viewHeight;
+    CGFloat _viewWidth;
 }
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -36,13 +38,12 @@
 @property (nonatomic, strong) UIView *saveBgView;
 @property (nonatomic, strong) UILabel *saveLabel;
 
-@property (nonatomic, assign) NSInteger currentImageIndex;
+@property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) NSInteger imageCount;
 
 @property (nonatomic, weak) id<GRPhotoBrowserViewDataSource> dataSource;
 @property (nonatomic, weak) id<GRPhotoBrowserViewDelegate> delegate;
 
 - (void)show;
-- (void)reload;
 
 @end

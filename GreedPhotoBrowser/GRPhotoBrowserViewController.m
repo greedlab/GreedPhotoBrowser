@@ -18,7 +18,7 @@
 {
     if (!_photoBrowser) {
         _photoBrowser = [[GRPhotoBrowserView alloc] initWithFrame:self.view.bounds];
-        _photoBrowser.currentImageIndex = _currentIndex;
+        _photoBrowser.currentIndex = _currentIndex;
         _photoBrowser.delegate = self;
         _photoBrowser.dataSource = self;
     }
@@ -30,7 +30,7 @@
 - (void)setCurrentIndex:(NSInteger)currentIndex
 {
     _currentIndex = currentIndex;
-    _photoBrowser.currentImageIndex = _currentIndex;
+    _photoBrowser.currentIndex = _currentIndex;
 }
 
 #pragma mark - View LifeCycle

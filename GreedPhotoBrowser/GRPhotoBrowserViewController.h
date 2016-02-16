@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) GRPhotoBrowserView *photoBrowser;
 
-@property (nonatomic, strong) NSMutableArray *photoItemsArray;
+@property (nonatomic, strong) NSArray *photoItemsArray;
 @property (nonatomic, assign) NSInteger currentIndex;
 
 @end

@@ -7,34 +7,31 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Masonry.h"
 #import "GRPhotoBrowserWaitingView.h"
 
-@interface GRPhotoBrowserSingleView : UIImageView<UIGestureRecognizerDelegate>
+@interface GRPhotoBrowserSingleView : UIView
+<UIGestureRecognizerDelegate>
 {
-    BOOL _didCheckSize;
-    UIImageView *_scrollImageView;
-    UIScrollView *_zoomingScroolView;
-    UIImageView *_zoomingImageView;
-    CGFloat _totalScale;
+    MASConstraint *_imageViewHeightConstraint;
+    MASConstraint *_imageViewWidthConstraint;
 }
 
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) GRPhotoBrowserWaitingView *waitingView;
 @property (nonatomic, strong) UILabel *failLabel;
 
+@property (nonatomic, assign) CGFloat scale;
 @property (nonatomic, assign) CGFloat progress;
 @property (nonatomic, assign, readonly) BOOL isScaled;
 @property (nonatomic, assign) BOOL hasLoadedImage;
 
-/**
- *  取消缩放
- */
-- (void)cancelScale;
+- (void)setScale:(CGFloat)scale animate:(BOOL)animate;
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(void (^)(BOOL success))completed;
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
 
-- (void)doubleTapToZommWithScale:(CGFloat)scale;
-
-- (void)clear;
+- (void)updateForScale:(CGFloat)scale animate:(BOOL)animate;
 
 @end

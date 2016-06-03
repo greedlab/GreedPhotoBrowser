@@ -14,21 +14,19 @@
 
 #pragma mark - getter
 
-- (GRPhotoBrowserView *)photoBrowser
-{
+- (GRPhotoBrowserView *)photoBrowser {
     if (!_photoBrowser) {
         _photoBrowser = [[GRPhotoBrowserView alloc] initWithFrame:self.view.bounds];
-        _photoBrowser.currentIndex = _currentIndex;
         _photoBrowser.delegate = self;
         _photoBrowser.dataSource = self;
+        _photoBrowser.currentIndex = _currentIndex;
     }
     return _photoBrowser;
 }
 
 #pragma mark - setter
 
-- (void)setCurrentIndex:(NSInteger)currentIndex
-{
+- (void)setCurrentIndex:(NSInteger)currentIndex {
     _currentIndex = currentIndex;
     _photoBrowser.currentIndex = _currentIndex;
 }
@@ -40,33 +38,30 @@
     self.view.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.photoBrowser];
     [self setConstraint];
-    
+
     [self.photoBrowser show];
 }
 
 #pragma mark - GRPhotoBrowserViewDataSource
 
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(GRPhotoBrowserView *)photoBrowser
-{
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(GRPhotoBrowserView *)photoBrowser {
     return _photoItemsArray.count;
 }
 
-- (GRPhotoBrowserItem *)photoBrowser:(GRPhotoBrowserView *)photoBrowser photoAtIndex:(NSUInteger)index
-{
+- (GRPhotoBrowserItem *)photoBrowser:(GRPhotoBrowserView *)photoBrowser
+                        photoAtIndex:(NSUInteger)index {
     return _photoItemsArray[index];
 }
 
 #pragma mark - GRPhotoBrowserViewDelegate
 
-- (void)didDismissInPhotoBrowser:(GRPhotoBrowserView *)photoBrowser
-{
+- (void)didDismissInPhotoBrowser:(GRPhotoBrowserView *)photoBrowser {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - private
 
-- (void)setConstraint
-{
+- (void)setConstraint {
     WeakSelf(weakSelf);
     [_photoBrowser mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(weakSelf.view);

@@ -12,8 +12,7 @@
 
 @implementation GRPhotoBrowserSingleView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _scale = 1.0;
@@ -25,64 +24,64 @@
 
 #pragma mark - public
 
-- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(void (^)(BOOL success))completed
-{
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(void (^)(BOOL success))completed {
     [_waitingView setHidden:NO];
     WeakSelf(weakSelf);
-    [_imageView sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-        weakSelf.progress = (CGFloat)receivedSize / expectedSize;
-    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [_waitingView setHidden:YES];
-        if (error) {
-            [_failLabel setHidden:NO];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [_failLabel setHidden:YES];
-            });
-            if (completed) {
-                completed(NO);
-            }
-        } else {
-            _imageView.image = image;
-            if (completed) {
-                completed(YES);
-            }
+    [_imageView sd_setImageWithURL:url
+        placeholderImage:placeholder
+        options:SDWebImageRetryFailed
+        progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            weakSelf.progress = (CGFloat) receivedSize / expectedSize;
         }
-    }];
+        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            [_waitingView setHidden:YES];
+            if (error) {
+                [_failLabel setHidden:NO];
+
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [_failLabel setHidden:YES];
+                });
+                if (completed) {
+                    completed(NO);
+                }
+            } else {
+                _imageView.image = image;
+                if (completed) {
+                    completed(YES);
+                }
+            }
+        }];
 }
 
-- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
-{
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder {
     [self setImageWithURL:url placeholderImage:placeholder completed:nil];
 }
 
-- (void)updateForScale:(CGFloat)scale animate:(BOOL)animate
-{
+- (void)updateForScale:(CGFloat)scale animate:(BOOL)animate {
     [_imageViewHeightConstraint setOffset:((scale - 1) * _scrollView.frame.size.height)];
     [_imageViewWidthConstraint setOffset:((scale - 1) * _scrollView.frame.size.width)];
-    
+
     if (animate) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [_scrollView layoutIfNeeded];
-            [_scrollView setContentOffset:CGPointMake((_scrollView.contentSize.width - _scrollView.frame.size.width) / 2.0, (_scrollView.contentSize.height - _scrollView.frame.size.height ) / 2.0)];
-        }];
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             [_scrollView layoutIfNeeded];
+                             [_scrollView setContentOffset:CGPointMake((_scrollView.contentSize.width - _scrollView.frame.size.width) / 2.0, (_scrollView.contentSize.height - _scrollView.frame.size.height) / 2.0)];
+                         }];
     } else {
         [_scrollView layoutIfNeeded];
-        [_scrollView setContentOffset:CGPointMake((_scrollView.contentSize.width - _scrollView.frame.size.width) / 2.0, (_scrollView.contentSize.height - _scrollView.frame.size.height ) / 2.0)];
+        [_scrollView setContentOffset:CGPointMake((_scrollView.contentSize.width - _scrollView.frame.size.width) / 2.0, (_scrollView.contentSize.height - _scrollView.frame.size.height) / 2.0)];
     }
 }
 
 #pragma mark - getter
 
-- (BOOL)isScaled
-{
-    return  1.0 != _scale;
+- (BOOL)isScaled {
+    return 1.0 != _scale;
 }
 
 #pragma mark - setter
 
-- (void)setProgress:(CGFloat)progress
-{
+- (void)setProgress:(CGFloat)progress {
     if (_progress == progress) {
         return;
     }
@@ -90,13 +89,11 @@
     _waitingView.progress = progress;
 }
 
-- (void)setScale:(CGFloat)scale
-{
+- (void)setScale:(CGFloat)scale {
     [self setScale:scale animate:NO];
 }
 
-- (void)setScale:(CGFloat)scale animate:(BOOL)animate
-{
+- (void)setScale:(CGFloat)scale animate:(BOOL)animate {
     if (scale < 0.5 || scale > 2.0 || scale == _scale) {
         return;
     }
@@ -106,8 +103,7 @@
 
 #pragma mark - action
 
-- (void)zoomImage:(UIPinchGestureRecognizer *)recognizer
-{
+- (void)zoomImage:(UIPinchGestureRecognizer *)recognizer {
     CGFloat scale = recognizer.scale;
     CGFloat temp = _scale + (scale - 1);
     [self setScale:temp];
@@ -132,7 +128,7 @@
         _imageView = imageView;
     }
     {
-        
+
         GRPhotoBrowserWaitingView *waitingView = [[GRPhotoBrowserWaitingView alloc] init];
         waitingView.mode = GRPhotoBrowserWaitingViewProgressMode;
         waitingView.hidden = YES;

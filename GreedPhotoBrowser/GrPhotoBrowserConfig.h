@@ -9,13 +9,13 @@
 #ifndef GrPhotoBrowserConfig_h
 #define GrPhotoBrowserConfig_h
 
-typedef enum {
-    GRPhotoBrowserWaitingViewModeLoopDiagram, // 环形
-    GRPhotoBrowserWaitingViewModePieDiagram // 饼型
+typedef enum : NSUInteger {
+    GRPhotoBrowserWaitingViewModeLoopDiagram = 1, // 环形
+    GRPhotoBrowserWaitingViewModePieDiagram   // 饼型
 } GRPhotoBrowserWaitingViewMode;
 
 #ifndef WeakSelf
-#define WeakSelf(weakSelf)  __weak __typeof(&*self)weakSelf = self;
+#define WeakSelf(weakSelf) __weak __typeof(&*self) weakSelf = self;
 #endif
 
 // 图片保存成功提示文字

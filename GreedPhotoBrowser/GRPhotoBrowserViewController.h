@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GRPhotoBrowserView.h"
 
-@interface GRPhotoBrowserViewController : UIViewController
-<GRPhotoBrowserViewDelegate
-,GRPhotoBrowserViewDataSource>
+@interface GRPhotoBrowserViewController : UIViewController <GRPhotoBrowserViewDelegate, GRPhotoBrowserViewDataSource>
 
 @property (nonatomic, strong) GRPhotoBrowserView *photoBrowser;
 

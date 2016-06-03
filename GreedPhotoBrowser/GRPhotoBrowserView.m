@@ -14,8 +14,7 @@
 
 @implementation GRPhotoBrowserView
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _showed = NO;
@@ -29,7 +28,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+
     BOOL viewWidthOrHeightUpdated = NO;
     CGFloat newWidth = CGRectGetWidth(self.frame);
     if (_viewWidth != newWidth) {
@@ -41,7 +40,7 @@
         _viewHeight = newHeight;
         viewWidthOrHeightUpdated = YES;
     }
-    
+
     if (viewWidthOrHeightUpdated) {
         [self viewWidthOrHeightUpdated];
     }
@@ -49,8 +48,7 @@
 
 #pragma mark - public
 
-- (void)show
-{
+- (void)show {
     self.imageCount = [self.dataSource numberOfPhotosInPhotoBrowser:self];
     [self updateIndexLabel];
     [self updateScrollView];
@@ -61,8 +59,7 @@
 
 #pragma mark - getter
 
-- (UIScrollView *)scrollView
-{
+- (UIScrollView *)scrollView {
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         _scrollView.backgroundColor = [UIColor clearColor];
@@ -74,8 +71,7 @@
     return _scrollView;
 }
 
-- (UILabel *)indexLabel
-{
+- (UILabel *)indexLabel {
     if (!_indexLabel) {
         UILabel *label = [[UILabel alloc] init];
         label.textAlignment = NSTextAlignmentCenter;
@@ -89,8 +85,7 @@
     return _indexLabel;
 }
 
-- (UIButton *)saveButton
-{
+- (UIButton *)saveButton {
     if (!_saveButton) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitle:@"保存" forState:UIControlStateNormal];
@@ -105,8 +100,7 @@
     return _saveButton;
 }
 
-- (UIActivityIndicatorView *)indicatorView
-{
+- (UIActivityIndicatorView *)indicatorView {
     if (!_indicatorView) {
         UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
         indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
@@ -143,8 +137,7 @@
 
 #pragma mark - setter
 
-- (void)setCurrentIndex:(NSInteger)currentIndex
-{
+- (void)setCurrentIndex:(NSInteger)currentIndex {
     if (_currentIndex == currentIndex) {
         return;
     }
@@ -161,13 +154,12 @@
 
 #pragma mark - action
 
-- (void)saveImage
-{
+- (void)saveImage {
     int index = _scrollView.contentOffset.x / _scrollView.bounds.size.width;
     UIImageView *currentImageView = _scrollView.subviews[index];
-    
+
     UIImageWriteToSavedPhotosAlbum(currentImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
-    
+
     [_indicatorView setHidden:NO];
     [_indicatorView startAnimating];
 }
@@ -176,7 +168,7 @@
 {
     [_indicatorView stopAnimating];
     [_indicatorView setHidden:YES];
-    
+
     _saveLabel.text = error ? GRPhotoBrowserSaveImageFailText : GRPhotoBrowserSaveImageSuccessText;
     [_saveLabel setHidden:NO];
     [_saveBgView setHidden:NO];
@@ -189,8 +181,7 @@
 /**
  *  加载图片
  */
-- (void)setupImageOfImageViewForIndex:(NSInteger)index
-{
+- (void)setupImageOfImageViewForIndex:(NSInteger)index {
     NSArray *array = [_scrollView subviews];
     if (index >= array.count) {
         return;
@@ -200,14 +191,16 @@
         [_saveButton setHidden:NO];
         return;
     }
-    if([self highQualityImageForIndex:index]){
+    if ([self highQualityImageForIndex:index]) {
         [singleView.imageView setImage:[self highQualityImageForIndex:index]];
         [_saveButton setHidden:NO];
     } else if ([self highQualityImageURLForIndex:index]) {
         [_saveButton setHidden:YES];
-        [singleView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index] completed:^(BOOL success) {
-            [_saveButton setHidden:!success];
-        }];
+        [singleView setImageWithURL:[self highQualityImageURLForIndex:index]
+                   placeholderImage:[self placeholderImageForIndex:index]
+                          completed:^(BOOL success) {
+                              [_saveButton setHidden:!success];
+                          }];
     } else {
         singleView.imageView.image = [self placeholderImageForIndex:index];
         [_saveButton setHidden:NO];
@@ -218,17 +211,15 @@
 /**
  *  单击消失
  */
-- (void)imageViewSingleTaped:(UITapGestureRecognizer *)recognizer
-{
+- (void)imageViewSingleTaped:(UITapGestureRecognizer *)recognizer {
     [self.delegate didDismissInPhotoBrowser:self];
 }
 
 /**
  *  双击放大，更改scale可以改放大倍数
  */
-- (void)imageViewDoubleTaped:(UITapGestureRecognizer *)recognizer
-{
-    GRPhotoBrowserSingleView *imageView = (GRPhotoBrowserSingleView *)recognizer.view;
+- (void)imageViewDoubleTaped:(UITapGestureRecognizer *)recognizer {
+    GRPhotoBrowserSingleView *imageView = (GRPhotoBrowserSingleView *) recognizer.view;
     CGFloat scale;
     if (imageView.isScaled) {
         scale = 1.0;
@@ -240,15 +231,14 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView != _scrollView) {
         return;
     }
     int index = (scrollView.contentOffset.x + _scrollView.bounds.size.width * 0.5) / _scrollView.bounds.size.width;
     CGFloat margin = 150;
     CGFloat x = scrollView.contentOffset.x;
-    if ((x - index * self.bounds.size.width) > margin || (x - index * self.bounds.size.width) < - margin) {
+    if ((x - index * self.bounds.size.width) > margin || (x - index * self.bounds.size.width) < -margin) {
         GRPhotoBrowserSingleView *singleView = _scrollView.subviews[index];
         if (singleView.isScaled) {
             [singleView setScale:1.0 animate:YES];
@@ -259,10 +249,9 @@
 
 #pragma mark - private
 
-- (void)initView
-{
+- (void)initView {
     self.backgroundColor = GRPhotoBrowserBackgrounColor;
-    
+
     [self addSubview:self.scrollView];
     [self addSubview:self.indexLabel];
     [self addSubview:self.saveButton];
@@ -271,10 +260,9 @@
     [self addSubview:self.saveLabel];
 }
 
-- (void)setConstraint
-{
+- (void)setConstraint {
     WeakSelf(weakSelf);
-    
+
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(weakSelf);
     }];
@@ -301,20 +289,18 @@
     }];
 }
 
-- (void)updateIndexLabel
-{
-    _indexLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long)_currentIndex + 1, (long)_imageCount];
+- (void)updateIndexLabel {
+    _indexLabel.text = [NSString stringWithFormat:@"%ld/%ld", (long) _currentIndex + 1, (long) _imageCount];
 }
 
--(void)updateScrollView
-{
+- (void)updateScrollView {
     for (UIView *view in [_scrollView subviews]) {
         [view removeFromSuperview];
     }
-    if (_imageCount <= 0 ) {
+    if (_imageCount <= 0) {
         return;
     }
-    for (int i = 0; i < _imageCount; i ++) {
+    for (int i = 0; i < _imageCount; i++) {
         GRPhotoBrowserSingleView *imageView = [[GRPhotoBrowserSingleView alloc] init];
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewSingleTaped:)];
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewDoubleTaped:)];
@@ -325,49 +311,46 @@
         [_scrollView addSubview:imageView];
     }
     NSArray *array = [_scrollView subviews];
-    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [array enumerateObjectsUsingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
         UIView *view = obj;
-        [view mas_makeConstraints:^(MASConstraintMaker *make){
+        [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.bottom.width.height.equalTo(_scrollView);
         }];
         if (idx == 0) {
-            [view mas_makeConstraints:^(MASConstraintMaker *make){
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(_scrollView);
             }];
             if (idx == array.count - 1) {
-                [view mas_makeConstraints:^(MASConstraintMaker *make){
+                [view mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.right.equalTo(_scrollView);
                 }];
             }
         } else if (idx == array.count - 1) {
             UIView *preView = [array objectAtIndex:(idx - 1)];
-            [view mas_makeConstraints:^(MASConstraintMaker *make){
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(preView.mas_right);
                 make.right.equalTo(_scrollView);
             }];
         } else {
             UIView *preView = [array objectAtIndex:(idx - 1)];
-            [view mas_makeConstraints:^(MASConstraintMaker *make){
+            [view mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(preView.mas_right);
             }];
         }
     }];
 }
 
-- (UIImage *)placeholderImageForIndex:(NSInteger)index
-{
+- (UIImage *)placeholderImageForIndex:(NSInteger)index {
     GRPhotoBrowserItem *photo = [self.dataSource photoBrowser:self photoAtIndex:index];
     return photo.placeholderImage;
 }
 
-- (UIImage *)highQualityImageForIndex:(NSInteger)index
-{
+- (UIImage *)highQualityImageForIndex:(NSInteger)index {
     GRPhotoBrowserItem *photo = [self.dataSource photoBrowser:self photoAtIndex:index];
     return photo.image;
 }
 
-- (NSURL *)highQualityImageURLForIndex:(NSInteger)index
-{
+- (NSURL *)highQualityImageURLForIndex:(NSInteger)index {
     GRPhotoBrowserItem *photo = [self.dataSource photoBrowser:self photoAtIndex:index];
     return photo.url;
 }

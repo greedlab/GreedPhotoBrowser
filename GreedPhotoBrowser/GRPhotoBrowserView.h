@@ -24,8 +24,7 @@
 
 @end
 
-@interface GRPhotoBrowserView : UIView<UIScrollViewDelegate>
-{
+@interface GRPhotoBrowserView : UIView <UIScrollViewDelegate> {
     BOOL _showed;
     CGFloat _viewHeight;
     CGFloat _viewWidth;

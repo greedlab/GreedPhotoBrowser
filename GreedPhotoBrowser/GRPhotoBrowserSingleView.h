@@ -10,9 +10,7 @@
 #import "Masonry.h"
 #import "GRPhotoBrowserWaitingView.h"
 
-@interface GRPhotoBrowserSingleView : UIView
-<UIGestureRecognizerDelegate>
-{
+@interface GRPhotoBrowserSingleView : UIView <UIGestureRecognizerDelegate> {
     MASConstraint *_imageViewHeightConstraint;
     MASConstraint *_imageViewWidthConstraint;
 }

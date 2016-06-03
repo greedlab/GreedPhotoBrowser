@@ -9,7 +9,8 @@
 #ifndef GRPhotoBrowser_h
 #define GRPhotoBrowser_h
 
-#import "GRPhotoBrowserViewController.h"
 #import "GRPhotoBrowserItem.h"
+#import "GRPhotoBrowserView.h"
+#import "GRPhotoBrowserViewController.h"
 
 #endif /* GRPhotoBrowser_h */

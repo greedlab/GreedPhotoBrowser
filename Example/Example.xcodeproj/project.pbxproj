@@ -62,6 +62,7 @@
 		281CF0171C72C25C003E799D /* pengyouquan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pengyouquan@2x.png"; sourceTree = "<group>"; };
 		281CF0181C72C25C003E799D /* qq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qq.png; sourceTree = "<group>"; };
 		281CF0191C72C25C003E799D /* qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@2x.png"; sourceTree = "<group>"; };
+		28A528CC1D01358300947AEF /* GreedPhotoBrowser.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = GreedPhotoBrowser.podspec; path = ../../GreedPhotoBrowser.podspec; sourceTree = "<group>"; };
 		32C6901D3C8F21802F0EBC83 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		429BEF10CB26A3E76CED2524 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E30A2E5669451ADA3A51AB86 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,6 +129,7 @@
 		281CEFCA1C71C0FB003E799D /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				28A528CC1D01358300947AEF /* GreedPhotoBrowser.podspec */,
 				281CF0151C72C25C003E799D /* Resource */,
 				281CEFCE1C71C0FB003E799D /* AppDelegate.h */,
 				281CEFCF1C71C0FB003E799D /* AppDelegate.m */,

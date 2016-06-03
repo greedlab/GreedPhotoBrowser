@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Masonry.h"
+#import <Masonry/Masonry.h>
 #import "GRPhotoBrowserWaitingView.h"
 
 @interface GRPhotoBrowserSingleView : UIView <UIGestureRecognizerDelegate> {

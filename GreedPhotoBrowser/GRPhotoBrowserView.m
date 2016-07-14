@@ -156,7 +156,8 @@
 
 - (void)saveImage {
     int index = _scrollView.contentOffset.x / _scrollView.bounds.size.width;
-    UIImageView *currentImageView = _scrollView.subviews[index];
+    GRPhotoBrowserSingleView *photoBrowserSingleView = _scrollView.subviews[index];
+    UIImageView *currentImageView = photoBrowserSingleView.imageView;
 
     UIImageWriteToSavedPhotosAlbum(currentImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 

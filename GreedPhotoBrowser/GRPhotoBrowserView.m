@@ -155,10 +155,12 @@
 #pragma mark - action
 
 - (void)saveImage {
-    int index = _scrollView.contentOffset.x / _scrollView.bounds.size.width;
+    NSInteger index = (NSInteger)(_scrollView.contentOffset.x / _scrollView.bounds.size.width);
+    if (_scrollView.subviews.count <= index) {
+        return;
+    }
     GRPhotoBrowserSingleView *photoBrowserSingleView = _scrollView.subviews[index];
     UIImageView *currentImageView = photoBrowserSingleView.imageView;
-
     UIImageWriteToSavedPhotosAlbum(currentImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
 
     [_indicatorView setHidden:NO];
@@ -236,7 +238,7 @@
     if (scrollView != _scrollView) {
         return;
     }
-    int index = (scrollView.contentOffset.x + _scrollView.bounds.size.width * 0.5) / _scrollView.bounds.size.width;
+    NSInteger index = (NSInteger)((scrollView.contentOffset.x + _scrollView.bounds.size.width * 0.5) / _scrollView.bounds.size.width);
     CGFloat margin = 150;
     CGFloat x = scrollView.contentOffset.x;
     if ((x - index * self.bounds.size.width) > margin || (x - index * self.bounds.size.width) < -margin) {

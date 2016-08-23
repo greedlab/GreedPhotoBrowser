@@ -359,11 +359,10 @@
 }
 
 - (void)viewWidthOrHeightUpdated {
-    {
-        [self updateScrollViewContentOffsetWithAnimated:YES];
-    }
-    {
-        GRPhotoBrowserSingleView *singleView = [_scrollView subviews][_currentIndex];
+   [self updateScrollViewContentOffsetWithAnimated:YES];
+    NSArray *subviews = [_scrollView subviews];
+    if (subviews.count > _currentIndex) {
+        GRPhotoBrowserSingleView *singleView = subviews[_currentIndex];
         [singleView updateForScale:singleView.scale animate:YES];
     }
 }

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "GreedPhotoBrowser"
-  s.version      = "0.0.6"
+  s.version      = "0.0.7"
   s.summary      = "a photo browser for iOS"
   s.description  = %{this is a photo browser for iOS }
   s.homepage     = "https://github.com/greedlab/GreedPhotoBrowser"

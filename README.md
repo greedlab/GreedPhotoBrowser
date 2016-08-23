@@ -19,10 +19,6 @@ pod 'GreedPhotoBrowser'
     [self presentViewController:viewController animated:YES completion:nil];
 ```
 
-## Change Log
-
-[CHANGELOG](CHANGELOG.md)
-
 ## LICENSE
 
 [MIT](LICENSE)

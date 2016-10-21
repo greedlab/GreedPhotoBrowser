@@ -27,30 +27,27 @@
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(void (^)(BOOL success))completed {
     [_waitingView setHidden:NO];
     WeakSelf(weakSelf);
-    [_imageView sd_setImageWithURL:url
-        placeholderImage:placeholder
-        options:SDWebImageRetryFailed
-        progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            weakSelf.progress = (CGFloat) receivedSize / expectedSize;
-        }
-        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            [_waitingView setHidden:YES];
-            if (error) {
-                [_failLabel setHidden:NO];
-
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [_failLabel setHidden:YES];
-                });
-                if (completed) {
-                    completed(NO);
-                }
-            } else {
-                _imageView.image = image;
-                if (completed) {
-                    completed(YES);
-                }
+    [_imageView sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+         weakSelf.progress = (CGFloat) receivedSize / expectedSize;
+    } completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        [_waitingView setHidden:YES];
+        if (error) {
+            [_failLabel setHidden:NO];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [_failLabel setHidden:YES];
+            });
+            if (completed) {
+                completed(NO);
             }
-        }];
+        } else {
+            _imageView.image = image;
+            if (completed) {
+                completed(YES);
+            }
+        }
+
+    }];
 }
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder {
@@ -147,6 +144,7 @@
         label.hidden = YES;
         [self addSubview:label];
         _failLabel = label;
+       
     }
     // 捏合手势缩放图片
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomImage:)];

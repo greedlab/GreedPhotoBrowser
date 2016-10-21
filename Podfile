@@ -1,13 +1,16 @@
 # the name of the project
 workspace 'GreedPhotoBrowser'
+platform :ios, '7.0'
+project 'Example/Example.xcodeproj'
+def pod_target
+    pod 'GreedPhotoBrowser', :path => './'
+end
 
 # let ExampleUnitTests use pods
-link_with 'Example', 'ExampleTests', 'ExampleUITests'
-
-platform :ios, '6.0'
+# link_with 'Example', 'ExampleTests', 'ExampleUITests'
 
 # the path of test project
-xcodeproj 'Example/Example'
 
-# the path of .podspec
-pod 'GreedPhotoBrowser', :path => './'
+target 'Example' do
+    pod_target
+end

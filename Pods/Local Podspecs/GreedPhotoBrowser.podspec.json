@@ -1,8 +1,8 @@
 {
   "name": "GreedPhotoBrowser",
-  "version": "0.0.1",
+  "version": "0.0.8",
   "summary": "a photo browser for iOS",
-  "description": "a photo browser for iOS",
+  "description": "this is a photo browser for iOS",
   "homepage": "https://github.com/greedlab/GreedPhotoBrowser",
   "license": "MIT",
   "authors": {
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/greedlab/GreedPhotoBrowser.git",
-    "tag": "0.0.1"
+    "tag": "0.0.8"
   },
   "source_files": [
     "GreedPhotoBrowser",
@@ -21,11 +21,11 @@
   ],
   "frameworks": [
     "Foundation",
-    "UIKIT"
+    "UIKit"
   ],
   "dependencies": {
     "SDWebImage": [
-
+      "~> 4.0.0-beta2"
     ],
     "Masonry": [
 

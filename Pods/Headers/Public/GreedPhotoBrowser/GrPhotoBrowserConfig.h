@@ -1,1 +1,1 @@
-../../../../GreedPhotoBrowser/GrPhotoBrowserConfig.h
+../../../../GreedPhotoBrowser/GRPhotoBrowserConfig.h

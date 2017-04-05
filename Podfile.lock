@@ -1,11 +1,11 @@
 PODS:
-  - GreedPhotoBrowser (0.0.8):
+  - GreedPhotoBrowser (0.1.0):
     - Masonry
-    - SDWebImage (~> 4.0.0-beta2)
+    - SDWebImage
   - Masonry (1.0.2)
-  - SDWebImage (4.0.0-beta2):
-    - SDWebImage/Core (= 4.0.0-beta2)
-  - SDWebImage/Core (4.0.0-beta2)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
 
 DEPENDENCIES:
   - GreedPhotoBrowser (from `./`)
@@ -15,10 +15,10 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  GreedPhotoBrowser: 15574b6d23451c25a0833f038f89521b424bb9d5
+  GreedPhotoBrowser: 11921731b02ab86037b13e4aef50156d7ac9b3ef
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
-  SDWebImage: e379f33106cf8d6766f970c0ef1c3fb609c94d78
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
 
 PODFILE CHECKSUM: d749c85c3f13db279ac47a2a1f4e40fa1320babe
 
-COCOAPODS: 1.1.0.beta.2
+COCOAPODS: 1.2.0

@@ -20,6 +20,7 @@
 		281CF01B1C72C25C003E799D /* pengyouquan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281CF0171C72C25C003E799D /* pengyouquan@2x.png */; };
 		281CF01C1C72C25C003E799D /* qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 281CF0181C72C25C003E799D /* qq.png */; };
 		281CF01D1C72C25C003E799D /* qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 281CF0191C72C25C003E799D /* qq@2x.png */; };
+		61DEA1D26E42B8810D7C96F2 /* libPods-Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B61F9A208448DAED3D58D80C /* libPods-Example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				047B82D11DB9E245003A6C23 /* libPods-Example.a in Frameworks */,
+				61DEA1D26E42B8810D7C96F2 /* libPods-Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "6.0"
   s.source       = { :git => "https://github.com/greedlab/GreedPhotoBrowser.git", :tag => s.version }
   s.source_files  = "GreedPhotoBrowser", "GreedPhotoBrowser/*.{h,m}"
-  s.public_header_files = 'GreedPhotoBrowser/GRPhotoBrowser.h'
+  s.public_header_files = 'GreedPhotoBrowser/*.h'
   s.frameworks  = "Foundation","UIKit"
   s.dependency 'SDWebImage'
   s.dependency 'Masonry'

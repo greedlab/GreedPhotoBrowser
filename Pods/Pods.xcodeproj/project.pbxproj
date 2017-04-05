@@ -60,7 +60,7 @@
 		85EC7E6C56CC443E84FEADD9093635A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F69D7F5F757E32F667732B08CC3293 /* UIKit.framework */; };
 		880B1755854E03ABF3851E3ABA72775F /* SDImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FBA1632C2367D24A867D323481851A7 /* SDImageCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8BA3881DD2E9657355A9D467F4E698BC /* NSArray+MASShorthandAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D26F8FBA9A2610B479BB88D173365FA /* NSArray+MASShorthandAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		984CF83A06CA4F7929093B2DCBDFA5CB /* GrPhotoBrowserConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 97445211AEB9C3D8D09F9C16CD1042DD /* GrPhotoBrowserConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		984CF83A06CA4F7929093B2DCBDFA5CB /* GRPhotoBrowserConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 97445211AEB9C3D8D09F9C16CD1042DD /* GRPhotoBrowserConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A71EDFA5EBE19D9247A456A911CDF47 /* GRPhotoBrowserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B6021B9E63AC2A3D1758BFF278BA9B36 /* GRPhotoBrowserViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F248C09DF75A7C0A987D1BFD82C6F6A /* SDWebImageDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 154209E46B6DE17D7BA72C148E4A3F55 /* SDWebImageDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A37B4626EED20F5B8E174D305E6ADFDE /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D4573F939ED984822D572C88F25906 /* UIImage+GIF.m */; };
@@ -187,7 +187,7 @@
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		93EDAAFACA73000EA87AE9A8D59310AD /* GRPhotoBrowserSingleView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GRPhotoBrowserSingleView.h; sourceTree = "<group>"; };
 		95ADC3CE15FC9D6225567F0906B40F00 /* NSImage+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSImage+WebCache.m"; path = "SDWebImage/NSImage+WebCache.m"; sourceTree = "<group>"; };
-		97445211AEB9C3D8D09F9C16CD1042DD /* GrPhotoBrowserConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GrPhotoBrowserConfig.h; sourceTree = "<group>"; };
+		97445211AEB9C3D8D09F9C16CD1042DD /* GRPhotoBrowserConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = GRPhotoBrowserConfig.h; sourceTree = "<group>"; };
 		99F69D7F5F757E32F667732B08CC3293 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		9BCE9E4F9F3B50B1A746DFB29057B8B4 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+WebCache.m"; path = "SDWebImage/UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		9CA3EF42B30E8BEB4C7D2DE75A3897A6 /* MASConstraintMaker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASConstraintMaker.m; path = Masonry/MASConstraintMaker.m; sourceTree = "<group>"; };
@@ -480,7 +480,7 @@
 			isa = PBXGroup;
 			children = (
 				6FD8B982BFE097214005AEDAB0578207 /* GRPhotoBrowser.h */,
-				97445211AEB9C3D8D09F9C16CD1042DD /* GrPhotoBrowserConfig.h */,
+				97445211AEB9C3D8D09F9C16CD1042DD /* GRPhotoBrowserConfig.h */,
 				FA4336C32A5031E1CE9A6B4D6CB3C017 /* GRPhotoBrowserItem.h */,
 				2688FBC1DEAA809C5F0A037EA340F6DB /* GRPhotoBrowserItem.m */,
 				93EDAAFACA73000EA87AE9A8D59310AD /* GRPhotoBrowserSingleView.h */,
@@ -503,7 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40E95B7C4AA397C6527F46A75D3CD632 /* GRPhotoBrowser.h in Headers */,
-				984CF83A06CA4F7929093B2DCBDFA5CB /* GrPhotoBrowserConfig.h in Headers */,
+				984CF83A06CA4F7929093B2DCBDFA5CB /* GRPhotoBrowserConfig.h in Headers */,
 				B9B3E86760937D0B982922F6EA851045 /* GRPhotoBrowserItem.h in Headers */,
 				30ACB6058DB0A244A08BCDD66DE32944 /* GRPhotoBrowserSingleView.h in Headers */,
 				B46732124ECD3A4C5B3BA177BE2975A7 /* GRPhotoBrowserView.h in Headers */,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0830"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "125F76034D16A3A6CF8C6C4E12AF39DC"
+               BlueprintIdentifier = "91E9F23A6C2925602BCAB1F2DC434C29"
                BuildableName = "libGreedPhotoBrowser.a"
                BlueprintName = "GreedPhotoBrowser"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "125F76034D16A3A6CF8C6C4E12AF39DC"
+            BlueprintIdentifier = "91E9F23A6C2925602BCAB1F2DC434C29"
             BuildableName = "libGreedPhotoBrowser.a"
             BlueprintName = "GreedPhotoBrowser"
             ReferencedContainer = "container:Pods.xcodeproj">

@@ -7,7 +7,7 @@
 //
 
 #import "GRPhotoBrowserViewController.h"
-#import "GrPhotoBrowserConfig.h"
+#import "GRPhotoBrowserConfig.h"
 #import "Masonry.h"
 
 @implementation GRPhotoBrowserViewController

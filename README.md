@@ -2,7 +2,7 @@
 
 a photo browser for iOS
 
-## [中文README](README-CN.md)
+English | [中文](README-CN.md)
 
 ## Installation
 
@@ -18,7 +18,3 @@ pod 'GreedPhotoBrowser'
     viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:viewController animated:YES completion:nil];
 ```
-
-## LICENSE
-
-[MIT](LICENSE)

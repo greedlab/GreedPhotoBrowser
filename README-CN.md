@@ -2,6 +2,8 @@
 
 iOS图片浏览器
 
+[English](README.md) | 中文)
+
 ## 安装
 
 ```
@@ -16,7 +18,3 @@ pod 'GreedPhotoBrowser'
     viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:viewController animated:YES completion:nil];
 ```
-
-## LICENSE
-
-[MIT](LICENSE)

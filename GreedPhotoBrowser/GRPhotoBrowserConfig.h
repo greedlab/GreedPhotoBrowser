@@ -1,13 +1,13 @@
 //
-//  GrPhotoBrowserConfig.h
+//  GRPhotoBrowserConfig.h
 //  Pods
 //
 //  Created by Bell on 16/2/15.
 //  Copyright © 2016年 GreedLab. All rights reserved.
 //
 
-#ifndef GrPhotoBrowserConfig_h
-#define GrPhotoBrowserConfig_h
+#ifndef GRPhotoBrowserConfig_h
+#define GRPhotoBrowserConfig_h
 
 typedef enum : NSUInteger {
     GRPhotoBrowserWaitingViewModeLoopDiagram = 1, // 环形
@@ -53,4 +53,4 @@ typedef enum : NSUInteger {
 #define GRPhotoBrowserWaitingViewItemMargin 10
 #endif
 
-#endif /* GrPhotoBrowserConfig_h */
+#endif /* GRPhotoBrowserConfig_h */
